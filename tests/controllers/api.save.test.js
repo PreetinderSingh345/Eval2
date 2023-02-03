@@ -61,4 +61,28 @@ describe('API services', () => {
             expect(mockRes.status().json).toHaveBeenCalledWith(resolvedValue);
         });
     });
+
+    describe('updateCompanyCeoName', () => {
+        it('should update the ceo name of the company', async () => {
+            const resolvedValue = 'Company CEO name updated successfully';
+
+            jest.spyOn(apiServices, 'updateCompanyCeoName').mockResolvedValue(resolvedValue);
+
+            const mockReq = {
+                body: {
+                    companyId: 1,
+                    ceo: 'Preetinder Singh'
+                }
+            };
+
+            const mockRes = {
+                status: jest.fn().mockReturnValue({ json: jest.fn() })
+            };
+
+            await apiController.updateCompanyCeoName(mockReq, mockRes);
+
+            expect(mockRes.status).toHaveBeenCalledWith(200);
+            expect(mockRes.status().json).toHaveBeenCalledWith(resolvedValue);
+        });
+    });
 });

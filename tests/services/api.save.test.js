@@ -43,4 +43,19 @@ describe('API services', () => {
             expect(returnedValue).toEqual(resolvedValue);
         });
     });
+
+    describe('updateCompanyCeoName', () => {
+        it('should update the ceo name of the company', async () => {
+            const resolvedValue = 'Company CEO name updated successfully';
+
+            jest.spyOn(Company, 'update').mockResolvedValue(resolvedValue);
+
+            const mockId = 1;
+            const mockCeoName = 'Preetinder Singh';
+
+            const returnedValue = await apiServices.updateCompanyCeoName(mockId, mockCeoName);
+
+            expect(returnedValue).toEqual(resolvedValue);
+        });
+    });
 });
