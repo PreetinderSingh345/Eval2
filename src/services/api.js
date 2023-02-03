@@ -70,11 +70,15 @@ const saveCompanies = async (urlLink) => {
                         companyId: companyId
                     }
                 });
+
+                console.log(score);
             }
         });
     });
 
-    return 'Companies saved successfully';
+    const companyEntries = await Company.findAll();
+
+    return companyEntries;
 };
 
 module.exports = {saveCompanies};
