@@ -25,4 +25,40 @@ describe('API services', () => {
             expect(mockRes.status().json).toHaveBeenCalledWith(resolvedValue);
         });
     });
+
+    describe('getTopRankedSectorCompanies', () => {
+        it('should return the top ranked companies in the given sector', async () => {
+            const resolvedValue = [
+                {
+                    id: 1,
+                    name: 'Meta',
+                    sector: 'Software',
+                    rank: 1
+                }, 
+                {
+                    id: 2,
+                    name: 'Microsft',
+                    sector: 'Software',
+                    rank: 2
+                }
+            ];
+
+            jest.spyOn(apiServices, 'getTopRankedSectorCompanies').mockResolvedValue(resolvedValue);
+
+            const mockReq = {
+                query: {
+                    sector: 'Software'
+                }
+            };
+
+            const mockRes = {
+                status: jest.fn().mockReturnValue({ json: jest.fn() })
+            };
+
+            await apiController.getTopRankedSectorCompanies(mockReq, mockRes);
+
+            expect(mockRes.status).toHaveBeenCalledWith(200);
+            expect(mockRes.status().json).toHaveBeenCalledWith(resolvedValue);
+        });
+    });
 });

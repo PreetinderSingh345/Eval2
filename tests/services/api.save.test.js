@@ -16,4 +16,31 @@ describe('API services', () => {
             expect(returnedValue).toEqual(resolvedValue);
         });
     });
+
+    describe('getTopRankedSectorCompanies', () => {
+        it('should return the top ranked companies in the given sector', async () => {
+            const resolvedValue = [
+                {
+                    id: 1,
+                    name: 'Meta',
+                    sector: 'Software',
+                    rank: 1
+                }, 
+                {
+                    id: 2,
+                    name: 'Microsft',
+                    sector: 'Software',
+                    rank: 2
+                }
+            ];
+
+            jest.spyOn(Company, 'findAll').mockResolvedValue(resolvedValue);
+
+            const mockSector = 'Software';
+
+            const returnedValue = await apiServices.getTopRankedSectorCompanies(mockSector);
+
+            expect(returnedValue).toEqual(resolvedValue);
+        });
+    });
 });
