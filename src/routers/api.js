@@ -1,9 +1,9 @@
 const express = require('express');
-const {saveCompanies} = require('../controllers/api');
+const {saveCompanies, getTopRankedSectorCompanies} = require('../controllers/api');
 
 const apiRouter = express.Router();
 
 apiRouter.post('/save', saveCompanies);
-apiRouter.get('/companies', )
+apiRouter.get('/companies', getTopRankedSectorCompanies);
 
 module.exports = apiRouter;

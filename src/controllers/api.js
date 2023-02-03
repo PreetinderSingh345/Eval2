@@ -6,4 +6,10 @@ const saveCompanies = async (req, res) => {
     res.status(200).json(await apiServices.saveCompanies(urlLink));
 }
 
-module.exports = {saveCompanies};
+const getTopRankedSectorCompanies = async (req, res) => {
+    const {sector} = req.query;
+
+    res.status(200).json(await apiServices.getTopRankedSectorCompanies(sector));
+}
+
+module.exports = {saveCompanies, getTopRankedSectorCompanies};

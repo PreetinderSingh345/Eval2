@@ -38,7 +38,7 @@ const saveCompanies = async (urlLink) => {
 
         const {name, ceo} = externalApiRespnonseId.data;
 
-        const company = await Company.create({
+        await Company.create({
             companyId: companyId,
             name: name,
             ceo: ceo,
@@ -70,15 +70,26 @@ const saveCompanies = async (urlLink) => {
                         companyId: companyId
                     }
                 });
-
-                console.log(score);
             }
         });
     });
 
-    const companyEntries = await Company.findAll();
+    const msg = 'Companies saved successfully';
 
-    return companyEntries;
+    return msg
 };
 
-module.exports = {saveCompanies};
+const getTopRankedSectorCompanies = async (sector) => {
+    const companies = await Company.findAll({
+        where: {
+            sector: sector
+        },
+        order: [
+            ['score', 'DESC']
+        ]
+    });
+
+    return companies;
+};
+
+module.exports = {saveCompanies, getTopRankedSectorCompanies};
