@@ -70,7 +70,7 @@ describe('API services', () => {
 
       const mockReq = {
         body: {
-          companyId: 1,
+          companyId: '1',
           ceo: 'Preetinder Singh'
         }
       };

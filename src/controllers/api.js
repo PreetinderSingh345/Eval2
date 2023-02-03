@@ -1,10 +1,10 @@
 const apiServices = require('../services/api');
-const {saveCompaniesSchema, getTopRankedSectorCompaniesSchema, updateCompanyCeoNameSchema} = require('../schemas/joiApi');
+const { saveCompaniesSchema, getTopRankedSectorCompaniesSchema, updateCompanyCeoNameSchema } = require('../schemas/joiApi');
 
 const saveCompanies = async (req, res) => {
-  const {urlLink} = req.body;
+  const { urlLink } = req.body;
 
-  const {error} = saveCompaniesSchema.validate({urlLink: urlLink});
+  const { error } = saveCompaniesSchema.validate({ urlLink: urlLink });
 
   if (error) {
     return res.status(400).json(error.details[0].message);
@@ -14,11 +14,11 @@ const saveCompanies = async (req, res) => {
 };
 
 const getTopRankedSectorCompanies = async (req, res) => {
-  const {sector} = req.query;
+  const { sector } = req.query;
 
-  const {error} = getTopRankedSectorCompaniesSchema.validate({sector: sector});
+  const { error } = getTopRankedSectorCompaniesSchema.validate({ sector: sector });
 
-  if(error) {
+  if (error) {
     return res.status(400).json(error.details[0].message);
   }
 
@@ -26,15 +26,15 @@ const getTopRankedSectorCompanies = async (req, res) => {
 };
 
 const updateCompanyCeoName = async (req, res) => {
-  const {companyId, ceo} = req.body;
+  const { companyId, ceo } = req.body;
 
-  const {error} = updateCompanyCeoNameSchema.validate({companyId: companyId, ceo: ceo});
+  const { error } = updateCompanyCeoNameSchema.validate({ companyId: companyId, ceo: ceo });
 
-  if(error) {
+  if (error) {
     return res.status(400).json(error.details[0].message);
   }
 
   res.status(200).json(await apiServices.updateCompanyCeoName(companyId, ceo));
 };
 
-module.exports = {saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName};
+module.exports = { saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName };

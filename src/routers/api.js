@@ -1,5 +1,5 @@
 const express = require('express');
-const {saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName} = require('../controllers/api');
+const { saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName } = require('../controllers/api');
 
 const apiRouter = express.Router();
 
