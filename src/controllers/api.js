@@ -12,4 +12,10 @@ const getTopRankedSectorCompanies = async (req, res) => {
     res.status(200).json(await apiServices.getTopRankedSectorCompanies(sector));
 }
 
-module.exports = {saveCompanies, getTopRankedSectorCompanies};
+const updateCompanyCeoName = async (req, res) => {
+    const {companyId, ceo} = req.body;
+
+    res.status(200).json(await apiServices.updateCompanyCeoName(companyId, ceo));
+};
+
+module.exports = {saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName};

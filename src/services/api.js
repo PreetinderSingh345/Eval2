@@ -92,4 +92,18 @@ const getTopRankedSectorCompanies = async (sector) => {
     return companies;
 };
 
-module.exports = {saveCompanies, getTopRankedSectorCompanies};
+const updateCompanyCeoName = async (companyId, ceo) => {
+    const updated= await Company.update({
+        ceo: ceo
+    }, {
+        where: {
+            companyId: companyId
+        }
+    });
+
+    const msg = updated[0]? 'Company CEO name updated successfully': 'Company not found';
+
+    return msg;
+};
+
+module.exports = {saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName};
