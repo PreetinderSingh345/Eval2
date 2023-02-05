@@ -1,12 +1,12 @@
 const { describe, it, expect } = require('@jest/globals');
-const apiServices  = require('../../src/services/api');
+const apiServices = require('../../src/services/api');
 const apiController = require('../../src/controllers/api');
 
 describe('API services', () => {
   describe('saveCompanies', () => {
     it('should add the companies to the database', async () => {
       const resolvedValue = 'Companies saved successfully';
-            
+
       jest.spyOn(apiServices, 'saveCompanies').mockResolvedValue(resolvedValue);
 
       const mockReq = {
@@ -30,16 +30,19 @@ describe('API services', () => {
     it('should return the top ranked companies in the given sector', async () => {
       const resolvedValue = [
         {
-          id: 1,
+          companyId: '1',
           name: 'Meta',
-          sector: 'Software',
-          rank: 1
-        }, 
+          ceo: 'Ceo of Meta',
+          score: 100,
+          sector: 'Software'
+        },
+
         {
-          id: 2,
-          name: 'Microsft',
-          sector: 'Software',
-          rank: 2
+          companyId: '2',
+          name: 'Microsoft',
+          ceo: 'Ceo of Microsoft',
+          score: 90,
+          sector: 'Software'
         }
       ];
 
@@ -71,7 +74,7 @@ describe('API services', () => {
       const mockReq = {
         body: {
           companyId: '1',
-          ceo: 'Preetinder Singh'
+          ceo: 'Ceo of Demo Company'
         }
       };
 

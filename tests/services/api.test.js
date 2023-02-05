@@ -21,16 +21,19 @@ describe('API services', () => {
     it('should return the top ranked companies in the given sector', async () => {
       const resolvedValue = [
         {
-          id: 1,
+          companyId: '1',
           name: 'Meta',
-          sector: 'Software',
-          rank: 1
-        }, 
+          ceo: 'Ceo of Meta',
+          score: 100,
+          sector: 'Software'
+        },
+
         {
-          id: 2,
-          name: 'Microsft',
-          sector: 'Software',
-          rank: 2
+          companyId: '2',
+          name: 'Microsoft',
+          ceo: 'Ceo of Microsoft',
+          score: 90,
+          sector: 'Software'
         }
       ];
 
@@ -50,8 +53,8 @@ describe('API services', () => {
 
       jest.spyOn(Company, 'update').mockResolvedValue(resolvedValue);
 
-      const mockId = 1;
-      const mockCeoName = 'Preetinder Singh';
+      const mockId = '1';
+      const mockCeoName = 'Ceo of Demo Company';
 
       const returnedValue = await apiServices.updateCompanyCeoName(mockId, mockCeoName);
 

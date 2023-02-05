@@ -1,21 +1,21 @@
 const axios = require('axios');
 
-const {Company} = require('../../database/models/index');
+const { Company } = require('../../database/models/index');
 
 const saveCompanies = async (urlLink) => {
   const externalApiResponse = await axios.get(urlLink)
     .then(response => {
-        return response;
-        })
+      return response;
+    })
     .catch(error => {
-        return error;
+      return error;
     });
 
-  let companyInfo=[];
+  let companyInfo = [];
 
   const companyInfoCsv = externalApiResponse.data;
 
-  const companyInfoSplitByLine=companyInfoCsv.split('\n');
+  const companyInfoSplitByLine = companyInfoCsv.split('\n');
 
   companyInfoSplitByLine.shift();
 
@@ -41,14 +41,14 @@ const saveCompanies = async (urlLink) => {
     uniqueSectors.add(companySector);
 
     const externalApiRespnonseId = await axios.get(`http://54.167.46.10/company/${companyId}`)
-        .then(response => {
-            return response;
-            })
-        .catch(error => {
-            return error;
-        });
+      .then(response => {
+        return response;
+      })
+      .catch(error => {
+        return error;
+      });
 
-    const {name, ceo} = externalApiRespnonseId.data;
+    const { name, ceo } = externalApiRespnonseId.data;
 
     await Company.create({
       companyId: companyId,
@@ -61,19 +61,19 @@ const saveCompanies = async (urlLink) => {
 
   uniqueSectors.forEach(async sector => {
     const externalApiResponseSector = await axios.get(`http://54.167.46.10/sector?name=${sector}`)
-    .then(response => {
+      .then(response => {
         return response;
-        })
-    .catch(error => {
+      })
+      .catch(error => {
         return error;
-    });
+      });
 
     const companyInfoSector = externalApiResponseSector.data;
 
     companyInfoSector.forEach(async element => {
-      const {companyId, performanceIndex} = element;
+      const { companyId, performanceIndex } = element;
 
-      if(uniqueIds.has(companyId)) {
+      if (uniqueIds.has(companyId)) {
         const cpi = performanceIndex[0]['value'];
         const cf = performanceIndex[1]['value'];
         const mau = performanceIndex[2]['value'];
@@ -111,7 +111,7 @@ const getTopRankedSectorCompanies = async (sector) => {
 };
 
 const updateCompanyCeoName = async (companyId, ceo) => {
-  const updated= await Company.update({
+  const updated = await Company.update({
     ceo: ceo
   }, {
     where: {
@@ -119,9 +119,9 @@ const updateCompanyCeoName = async (companyId, ceo) => {
     }
   });
 
-  const msg = updated[0]? 'Company CEO name updated successfully': 'Company not found';
+  const msg = updated[0] ? 'Company CEO name updated successfully' : 'Company not found';
 
   return msg;
 };
 
-module.exports = {saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName};
+module.exports = { saveCompanies, getTopRankedSectorCompanies, updateCompanyCeoName };
