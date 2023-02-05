@@ -1,11 +1,10 @@
 const axios = require('axios');
-
 const { Company } = require('../../database/models/index');
 
 const saveCompanies = async (urlLink) => {
   const externalApiResponse = await axios.get(urlLink)
     .then(response => {
-      return response;
+      return response.data;
     })
     .catch(error => {
       return error;
@@ -13,7 +12,9 @@ const saveCompanies = async (urlLink) => {
 
   let companyInfo = [];
 
-  const companyInfoCsv = externalApiResponse.data;
+  const companyInfoCsv = externalApiResponse;
+
+  console.log(companyInfoCsv);
 
   const companyInfoSplitByLine = companyInfoCsv.split('\n');
 
@@ -42,13 +43,13 @@ const saveCompanies = async (urlLink) => {
 
     const externalApiRespnonseId = await axios.get(`http://54.167.46.10/company/${companyId}`)
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(error => {
         return error;
       });
 
-    const { name, ceo } = externalApiRespnonseId.data;
+    const { name, ceo } = externalApiRespnonseId;
 
     await Company.create({
       companyId: companyId,
@@ -62,13 +63,13 @@ const saveCompanies = async (urlLink) => {
   uniqueSectors.forEach(async sector => {
     const externalApiResponseSector = await axios.get(`http://54.167.46.10/sector?name=${sector}`)
       .then(response => {
-        return response;
+        return response.data;
       })
       .catch(error => {
         return error;
       });
 
-    const companyInfoSector = externalApiResponseSector.data;
+    const companyInfoSector = externalApiResponseSector;
 
     companyInfoSector.forEach(async element => {
       const { companyId, performanceIndex } = element;
