@@ -13,9 +13,7 @@ const saveCompanies = async (urlLink) => {
   let companyInfo = [];
 
   const companyInfoCsv = externalApiResponse;
-
-  console.log(companyInfoCsv);
-
+  
   const companyInfoSplitByLine = companyInfoCsv.split('\n');
 
   companyInfoSplitByLine.shift();
@@ -27,15 +25,15 @@ const saveCompanies = async (urlLink) => {
   let uniqueIds = new Set();
   let uniqueSectors = new Set();
 
-  companyInfo.forEach(element => {
+  for(const element of companyInfo) {
     const companyId = element[0];
     const companySector = element[1];
 
     uniqueIds.add(companyId);
     uniqueSectors.add(companySector);
-  });
+  };
 
-  companyInfo.forEach(async element => {
+  for(const element of companyInfo) {
     const companyId = element[0];
     const companySector = element[1];
 
@@ -58,9 +56,9 @@ const saveCompanies = async (urlLink) => {
       sector: companySector,
       score: 0
     });
-  });
+  };
 
-  uniqueSectors.forEach(async sector => {
+  for(const sector of uniqueSectors) {
     const externalApiResponseSector = await axios.get(`http://54.167.46.10/sector?name=${sector}`)
       .then(response => {
         return response.data;
@@ -71,7 +69,7 @@ const saveCompanies = async (urlLink) => {
 
     const companyInfoSector = externalApiResponseSector;
 
-    companyInfoSector.forEach(async element => {
+    for(const element of companyInfoSector) {
       const { companyId, performanceIndex } = element;
 
       if (uniqueIds.has(companyId)) {
@@ -90,8 +88,8 @@ const saveCompanies = async (urlLink) => {
           }
         });
       }
-    });
-  });
+    };
+  };
 
   const msg = 'Companies saved successfully';
 
