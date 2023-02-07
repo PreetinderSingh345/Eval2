@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { Company } = require('../../database/models/index');
+const Sequelize = require('sequelize')
 
 const saveCompanies = async (urlLink) => {
   const externalApiResponse = await axios.get(urlLink)
@@ -98,13 +99,23 @@ const saveCompanies = async (urlLink) => {
 
 const getTopRankedSectorCompanies = async (sector) => {
   const companies = await Company.findAll({
+    attributes : [
+      'companyId', 'name', 'ceo', 'score',
+      [Sequelize.literal('(RANK() OVER (ORDER BY score DESC))'), 'rank']
+    ],
     where: {
       sector: sector
-    },
-    order: [
-      ['score', 'DESC']
-    ]
+    }
   });
+
+  // const companies = await Company.findAll({
+  //   where: {
+  //     sector: sector
+  //   },
+  //   order: [
+  //     ['score', 'DESC']
+  //   ]
+  // });
 
   return companies;
 };
